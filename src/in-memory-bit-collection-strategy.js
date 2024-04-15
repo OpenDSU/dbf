@@ -1,5 +1,5 @@
 function InMemoryBitCollectionStrategy(options) {
-    let { byteCount, data } = options;
+    let {byteCount, data} = options;
 
     this.buffer = new ArrayBuffer(byteCount);
     this.unit8 = new Uint8Array(this.buffer);

@@ -1,6 +1,6 @@
 const BloomFilter = require("./src/bloom-filter");
 
-const bloomFilter = new BloomFilter({ estimatedElementCount: 100 });
+const bloomFilter = new BloomFilter({estimatedElementCount: 100});
 
 Array.from(Array(10).keys()).map((i) => {
     const data = `element${i + 1}`;
@@ -20,13 +20,13 @@ Array.from(Array(15).keys()).map((i) => {
 
 // Testing serialization
 const serialisation = bloomFilter.bloomFilterSerialisation();
-console.log({ serialisation });
+console.log({serialisation});
 
 // Creating bloom filter clone via serialization
 const bloomFilterClone = new BloomFilter(serialisation);
 
 const cloneSerialisation = bloomFilterClone.bloomFilterSerialisation();
-console.log({ cloneSerialisation });
+console.log({cloneSerialisation});
 
 const testCloneElement = (element) => {
     const result = bloomFilterClone.test(element);

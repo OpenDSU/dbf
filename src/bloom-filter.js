@@ -44,7 +44,7 @@ function BloomFilter(serialisation, options) {
     this.options = { ...DEFAULT_OPTIONS, ...(options || { estimatedElementCount: 1 }) };
 
     if (serialisation) {
-        serialisationOptions = JSON.parse(serialisation);
+        let serialisationOptions = JSON.parse(serialisation);
         const { data, ...filterOptions } = serialisationOptions;
         this.options = { ...this.options, ...filterOptions, ...(options || {}) };
         serialisationData = data;
