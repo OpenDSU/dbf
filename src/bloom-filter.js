@@ -41,18 +41,18 @@ function BloomFilter(serialisation, options) {
 
     let serialisationData;
 
-    this.options = { ...DEFAULT_OPTIONS, ...(options || { estimatedElementCount: 1 }) };
+    this.options = {...DEFAULT_OPTIONS, ...(options || {estimatedElementCount: 1})};
 
     if (serialisation) {
         let serialisationOptions = JSON.parse(serialisation);
-        const { data, ...filterOptions } = serialisationOptions;
-        this.options = { ...this.options, ...filterOptions, ...(options || {}) };
+        const {data, ...filterOptions} = serialisationOptions;
+        this.options = {...this.options, ...filterOptions, ...(options || {})};
         serialisationData = data;
-        console.log({ filterOptions, options });
+        console.log({filterOptions, options});
     }
 
-    const { estimatedElementCount, falsePositiveTolerance, BitCollectionStrategy } = this.options;
-    let { bitCount, hashFunctionCount } = this.options;
+    const {estimatedElementCount, falsePositiveTolerance, BitCollectionStrategy} = this.options;
+    let {bitCount, hashFunctionCount} = this.options;
 
     if (estimatedElementCount) {
         if (!bitCount) {
@@ -74,13 +74,13 @@ function BloomFilter(serialisation, options) {
         byteCount,
     };
 
-    this.bitCollectionStrategy = new BitCollectionStrategy({ ...this.options, data: serialisationData });
+    this.bitCollectionStrategy = new BitCollectionStrategy({...this.options, data: serialisationData});
     console.log("Configuring Bloom filter ", this.options);
 }
 
 BloomFilter.prototype.bloomFilterSerialisation = function () {
     const {
-        options: { estimatedElementCount, falsePositiveTolerance },
+        options: {estimatedElementCount, falsePositiveTolerance},
         bitCollectionStrategy,
     } = this;
     const serialisation = {
@@ -92,8 +92,8 @@ BloomFilter.prototype.bloomFilterSerialisation = function () {
 };
 
 BloomFilter.prototype.calculateHash = function (data, index) {
-    const { options } = this;
-    const { hashFunction, cryptoHashFunction, cryptoHashFunctionCount } = options;
+    const {options} = this;
+    const {hashFunction, cryptoHashFunction, cryptoHashFunctionCount} = options;
 
     const mustUseCryptoHash = 0 < cryptoHashFunctionCount && index < cryptoHashFunctionCount;
     const currentIndexHashFunction = mustUseCryptoHash ? cryptoHashFunction : hashFunction;
@@ -103,8 +103,8 @@ BloomFilter.prototype.calculateHash = function (data, index) {
 };
 
 BloomFilter.prototype.insert = function (data) {
-    const { bitCollectionStrategy, options } = this;
-    const { hashFunctionCount } = options;
+    const {bitCollectionStrategy, options} = this;
+    const {hashFunctionCount} = options;
 
     for (let index = 0; index < hashFunctionCount; index++) {
         const hash = this.calculateHash(data, index);
@@ -113,8 +113,8 @@ BloomFilter.prototype.insert = function (data) {
 };
 
 BloomFilter.prototype.test = function (data) {
-    const { bitCollectionStrategy, options } = this;
-    const { hashFunctionCount } = options;
+    const {bitCollectionStrategy, options} = this;
+    const {hashFunctionCount} = options;
 
     for (let index = 0; index < hashFunctionCount; index++) {
         const hash = this.calculateHash(data, index);
